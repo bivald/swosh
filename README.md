@@ -14,12 +14,6 @@ This is a scroll based animation framework, as you scroll down on the site you t
 7. ANIMATION_FIXED_START (experimental)
 8. ANIMATION_FIXED_END (experimental)
 
-You initiate load balancing for ANIMATION_FRAMES with:
-
-```javascript
-var hostnames = ['http://static1.example.com','http://static2.example.com','http://static3.example.com','http://static4.example.com'];
-```
-
 In the lite version you define the animations based on scrolling positions (in pixels from the top). In the full (uncleaned) version you define based on div positions and percentage (making it perfect for responsive design). 
 
 Important
@@ -39,6 +33,10 @@ Animation types
 - "startFrame": Usually 1 (translates into 1.jpg)
 - "endFrame": Your last frame 
 - "type": animation type, in this case ANIMATION_FRAMES
+- "folder": Folder that contains the images
+- "fileFormat": currentPixel + fileFormat eq file name, i.e 5 + png = 5.png
+
+The animations should be exported as frame by frame, starting from 1.fileFormat. Using PNG will enable you to have a transparent background. Each frame should have the exact same size. Use a program such as Name Mangler (or any *nix shell script) to rename in format 1.jpg, 2.jpg, 3.jpg etc. All images should be optimized using a software similar to ImageOptim to shrink their filesize. 
 
 ```javascript
 {
@@ -49,7 +47,7 @@ endAtPixel: 1400,
 startFrame: 1,
 endFrame: 76,
 type: ANIMATION_FRAMES,
-folder: '/wp-content/themes/iwww/static/cases/spotify/animation1/',
+folder: '/path/to/folder/',
 fileFormat: 'png',
 data: {}            
 },
@@ -173,3 +171,14 @@ Init the framework
 	animator.updateFrame( 1 );
 	animator.startAnimations();    
 ```
+
+Loadbalancing
+-------------
+
+You initiate load balancing for ANIMATION_FRAMES with:
+
+```javascript
+var hostnames = ['http://static1.example.com','http://static2.example.com','http://static3.example.com','http://static4.example.com'];
+```
+
+For now, if you only have 1 domain (which I strongly advice against if you'r using ANIMATION_FRAMES) set all four to the same domain. 
